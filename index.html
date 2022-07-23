@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Document</title>
+    <style>
+      label,
+      input {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <form action="#" method="GET">
+      <label for="deviation">odchylenie:</label>
+      <input type="text" id="deviation" required />
+      <label for="aver">Średnia:</label>
+      <input type="text" id="aver" required />
+      <label for="freq">Częstotliwość:</label>
+      <input type="text" id="freq" required />
+      <button class="submit" type="submit">Submit</button>
+    </form>
+    <script>
+      const submit = document.querySelector(".submit");
+      let deviation = 2;
+      let aver = 10;
+      let freq = 500;
+
+      function getData() {
+        return Math.floor(
+          Math.random() * (aver + deviation - aver + deviation + 1) +
+            aver -
+            deviation
+        );
+      }
+
+      Plotly.plot("chart", [
+        {
+          y: [getData()],
+          type: "line",
+        },
+      ]);
+
+      let cnt = 0;
+
+      function showing() {
+        Plotly.extendTraces("chart", { y: [[getData()]] }, [0]);
+        cnt++;
+        console.log(aver, deviation, freq);
+
+        if (cnt > 500) {
+          Plotly.relayout("chart", {
+            xaxis: {
+              range: [cnt - 500, cnt],
+            },
+          });
+        }
+      }
+
+      const first = setInterval(showing, freq);
+
+      function changing(e) {
+        e.preventDefault();
+        deviation = parseInt(document.querySelector("#deviation").value);
+        aver = parseInt(document.querySelector("#aver").value);
+        freq = parseInt(document.querySelector("#freq").value);
+        if (isNaN(deviation) || isNaN(aver) || isNaN(freq)) {
+          alert("musisz wpisać wszystkie wartości");
+          clearInterval(first);
+        } else {
+          setInterval(showing, freq);
+        }
+      }
+
+      submit.addEventListener("click", changing);
+    </script>
+  </body>
+</html>
