@@ -19,9 +19,9 @@
       <label for="deviation">odchylenie:</label>
       <input type="text" id="deviation" />
       <label for="aver">Średnia:</label>
-      <input type="text" id="aver" />
+      <input type="text" id="aver" required />
       <label for="freq">Częstotliwość:</label>
-      <input type="text" id="freq" />
+      <input type="text" id="freq" required />
       <button class="submit" type="submit">Submit</button>
     </form>
     <script>
@@ -61,18 +61,18 @@
         }
       }
 
-      const first = setInterval(showing, freq);
+      let first = setInterval(showing, freq);
 
       function changing(e) {
         e.preventDefault();
         deviation = parseInt(document.querySelector("#deviation").value);
         aver = parseInt(document.querySelector("#aver").value);
         freq = parseInt(document.querySelector("#freq").value);
+        clearInterval(first);
         if (isNaN(deviation) || isNaN(aver) || isNaN(freq)) {
           alert("musisz wpisać wszystkie wartości");
-          clearInterval(first);
         } else {
-          setInterval(showing, freq);
+          first = setInterval(showing, freq);
         }
       }
 
