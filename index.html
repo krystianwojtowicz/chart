@@ -75,8 +75,8 @@
           isNaN(deviation) ||
           isNaN(aver) ||
           isNaN(freq) ||
-          freq < 0 ||
-          deviation < 0
+          freq <= 0 ||
+          deviation <= 0
         ) {
           alert(
             "musisz wpisać wszystkie wartości i częstotliwość i odchylenie muszą być większe od 0"
