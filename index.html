@@ -29,6 +29,9 @@
       let deviation = 2;
       let aver = 10;
       let freq = 500;
+      let deviation2 = deviation;
+      let aver2 = aver;
+      let freq2 = freq;
 
       function getData() {
         return Math.floor(
@@ -62,15 +65,26 @@
       }
 
       let first = setInterval(showing, freq);
-
       function changing(e) {
         e.preventDefault();
         deviation = parseInt(document.querySelector("#deviation").value);
         aver = parseInt(document.querySelector("#aver").value);
         freq = parseInt(document.querySelector("#freq").value);
         clearInterval(first);
-        if (isNaN(deviation) || isNaN(aver) || isNaN(freq)) {
-          alert("musisz wpisać wszystkie wartości");
+        if (
+          isNaN(deviation) ||
+          isNaN(aver) ||
+          isNaN(freq) ||
+          freq < 0 ||
+          deviation < 0
+        ) {
+          alert(
+            "musisz wpisać wszystkie wartości i częstotliwość i odchylenie muszą być większe od 0"
+          );
+          deviation = deviation2;
+          freq = freq2;
+          aver = aver2;
+          first = setInterval(showing, freq);
         } else {
           first = setInterval(showing, freq);
         }
